@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "wedding-invitation-generation": {
+      "source": "eachlabs/skills",
+      "sourceType": "github",
+      "skillPath": "skills/wedding-invitation-generation/SKILL.md",
+      "computedHash": "bb6fde7cfdfc05093606f6fa0df24b5bdf8eb6f1795d2c5c2af322ac8a1f1d00"
+    }
+  }
+}
