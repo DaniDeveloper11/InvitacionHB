@@ -14,76 +14,99 @@
   </head>
   <body class="bg-paper text-ink font-sans antialiased">
     <div id="app" class="min-h-screen flex flex-col">
-      <!-- Hero: foto a pantalla completa, optimizado para mobile -->
+      <!-- Hero: foto a pantalla completa con parallax dramático al hacer scroll -->
       <section
         x-data="{ show: false }"
-        x-init="setTimeout(() => (show = true), 100)"
+        x-init="setTimeout(() => (show = true), 150)"
         class="relative h-[100svh] min-h-[100svh] w-full overflow-hidden bg-charcoal"
       >
-        <!-- Coloca tu fotografía en public/images/hero.jpg (retrato, mínimo 1200x1600px) -->
+        <!-- Coloca tu fotografía en public/images/hero.webp (retrato, mínimo 1200x1600px) -->
         <img
-          src="/images/11.jpg"
+          src="/images/hero.webp"
           alt=""
           fetchpriority="high"
           decoding="async"
           onerror="this.style.display='none'"
           class="absolute inset-0 h-full w-full object-cover object-center grayscale"
+          :style="`transform: translate3d(0, ${$store.scroll.y * 0.4}px, 0) scale(${1 + Math.min($store.scroll.y, 700) / 1400})`"
         />
-        <div class="absolute inset-0 bg-gradient-to-b from-charcoal/10 via-charcoal/10 to-charcoal/90"></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-charcoal/20 via-charcoal/10 to-charcoal/95"
+        ></div>
+        <div
+          class="absolute inset-0 bg-charcoal transition-opacity duration-100"
+          :style="`opacity: ${Math.min($store.scroll.y / 500, 0.75)}`"
+        ></div>
 
         <div
           class="relative z-10 flex h-full flex-col items-center justify-end px-6 pb-[max(3rem,env(safe-area-inset-bottom))] pt-[max(3rem,env(safe-area-inset-top))] text-center text-paper"
+          :style="`transform: translate3d(0, ${$store.scroll.y * 0.55}px, 0); opacity: ${Math.max(1 - $store.scroll.y / 350, 0)}`"
         >
           <p
             x-show="show"
-            x-transition:enter="transition ease-out duration-700"
-            x-transition:enter-start="opacity-0 translate-y-2"
+            x-transition:enter="transition ease-out duration-1000"
+            x-transition:enter-start="opacity-0 translate-y-4"
             x-transition:enter-end="opacity-100 translate-y-0"
-            class="uppercase tracking-[0.3em] text-xs sm:text-sm text-muted mb-4"
+            class="uppercase tracking-[0.4em] text-xs sm:text-sm text-muted mb-4"
           >
             Te invito a mi
           </p>
           <h1
             x-show="show"
-            x-transition:enter="transition ease-out duration-700 delay-100"
-            x-transition:enter-start="opacity-0 translate-y-3"
-            x-transition:enter-end="opacity-100 translate-y-0"
-            class="font-serif text-6xl sm:text-8xl leading-none"
+            x-transition:enter="transition ease-out duration-1000 delay-150"
+            x-transition:enter-start="opacity-0 translate-y-8 scale-95 blur-sm"
+            x-transition:enter-end="opacity-100 translate-y-0 scale-100 blur-none"
+            class="font-serif text-7xl sm:text-9xl leading-none"
           >
             Cumpleaños
           </h1>
           <div
             x-show="show"
-            x-transition:enter="transition ease-out duration-700 delay-200"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            class="w-10 h-px bg-muted my-6"
+            x-transition:enter="transition ease-out duration-700 delay-500"
+            x-transition:enter-start="opacity-0 w-0"
+            x-transition:enter-end="opacity-100 w-10"
+            class="h-px bg-muted my-6"
           ></div>
           <p
             x-show="show"
-            x-transition:enter="transition ease-out duration-700 delay-300"
-            x-transition:enter-start="opacity-0 translate-y-2"
+            x-transition:enter="transition ease-out duration-1000 delay-700"
+            x-transition:enter-start="opacity-0 translate-y-4"
             x-transition:enter-end="opacity-100 translate-y-0"
             class="text-sm sm:text-base text-muted max-w-xs"
           >
             Acompáñame a celebrar este día tan especial
           </p>
         </div>
+
+        <div
+          x-show="show"
+          x-transition:enter="transition ease-out duration-1000 delay-1000"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-60"
+          :style="`opacity: ${Math.max(0.6 - $store.scroll.y / 150, 0)}`"
+          class="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-paper"
+        >
+          <svg class="h-5 w-5 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 4v16m0 0l-6-6m6 6l6-6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
       </section>
 
       <!-- Fecha y hora -->
       <section class="w-full bg-paper px-6 py-20 flex flex-col items-center text-center">
-        <p class="uppercase tracking-[0.25em] text-xs text-ink/50 mb-4">Guarda la fecha</p>
-        <p class="font-serif text-3xl sm:text-5xl">Jueves, 31 de diciembre de 2026</p>
+        <p x-reveal class="uppercase tracking-[0.25em] text-xs text-ink/50 mb-4">Guarda la fecha</p>
+        <p x-reveal.lg.blur.delay-150 class="font-serif text-3xl sm:text-5xl">
+          Jueves, 31 de diciembre de 2026
+        </p>
         <div class="w-10 h-px bg-ink/15 my-6"></div>
-        <p class="uppercase tracking-[0.2em] text-sm text-ink/70">7:00 PM</p>
+        <p x-reveal.delay-300 class="uppercase tracking-[0.2em] text-sm text-ink/70">7:00 PM</p>
       </section>
 
       <!-- Cuenta regresiva -->
       <section x-data="countdown" class="w-full bg-charcoal text-paper px-6 py-20">
-        <p class="uppercase tracking-[0.25em] text-xs text-muted text-center mb-10">Faltan</p>
+        <p x-reveal class="uppercase tracking-[0.25em] text-xs text-muted text-center mb-10">Faltan</p>
 
-        <div x-show="!terminado" class="flex gap-6 sm:gap-10 justify-center text-center">
+        <div x-show="!terminado" x-reveal.lg.scale class="flex gap-6 sm:gap-10 justify-center text-center">
           <div>
             <span class="block text-4xl sm:text-6xl font-serif tabular-nums" x-text="String(dias).padStart(2, '0')"></span>
             <span class="block mt-2 text-[10px] sm:text-xs uppercase tracking-[0.25em] text-muted">Días</span>
@@ -109,8 +132,8 @@
 
       <!-- Mensaje personal -->
       <section class="w-full bg-paper px-6 py-20 flex flex-col items-center text-center">
-        <p class="uppercase tracking-[0.25em] text-xs text-ink/50 mb-8">Un mensaje para ti</p>
-        <p class="font-sans text-base sm:text-lg leading-relaxed max-w-md text-ink/80">
+        <p x-reveal class="uppercase tracking-[0.25em] text-xs text-ink/50 mb-8">Un mensaje para ti</p>
+        <p x-reveal.lg.blur.delay-150 class="font-sans text-base sm:text-lg leading-relaxed max-w-md text-ink/80">
           Quiero celebrar este día rodeado de las personas que más quiero, así que no
           podría faltar tu compañía. Habrá buena música, buena comida y muchas ganas de
           pasarla bien. ¡Te espero! 🎉
@@ -119,10 +142,10 @@
 
       <!-- Detalles: lugar y vestimenta -->
       <section class="w-full bg-charcoal text-paper px-6 py-20">
-        <p class="uppercase tracking-[0.25em] text-xs text-muted text-center mb-12">Los detalles</p>
+        <p x-reveal class="uppercase tracking-[0.25em] text-xs text-muted text-center mb-12">Los detalles</p>
 
         <div class="max-w-md mx-auto divide-y divide-paper/15">
-          <div class="py-6">
+          <div x-reveal.lg class="py-6">
             <p class="uppercase tracking-[0.2em] text-xs text-muted mb-2">Lugar</p>
             <p class="font-serif text-2xl mb-1">Salón de Eventos</p>
             <p class="text-sm text-muted mb-4">Calle Falsa 123, Ciudad</p>
@@ -135,9 +158,87 @@
               Ver en el mapa
             </a>
           </div>
-          <div class="py-6">
+          <div x-reveal.lg.delay-150 class="py-6">
             <p class="uppercase tracking-[0.2em] text-xs text-muted mb-2">Código de vestimenta</p>
             <p class="font-serif text-2xl">Casual elegante</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Galería -->
+      <section class="w-full bg-paper px-6 py-20">
+        <p x-reveal class="uppercase tracking-[0.25em] text-xs text-ink/50 text-center mb-3">Momentos</p>
+        <p x-reveal.delay-150 class="font-serif text-3xl sm:text-5xl text-center mb-12">Galería</p>
+
+        <div x-data="gallery" class="max-w-3xl mx-auto grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
+          <template x-for="(photo, i) in photos" :key="i">
+            <button
+              type="button"
+              @click="show(i)"
+              x-reveal
+              :style="`transition-delay: ${(i % 6) * 60}ms`"
+              class="group relative aspect-square overflow-hidden bg-ink/5"
+            >
+              <img
+                :src="photo"
+                :alt="`Foto ${i + 1}`"
+                loading="lazy"
+                decoding="async"
+                onerror="this.closest('button').style.display='none'"
+                class="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-110 group-hover:grayscale-0"
+              />
+            </button>
+          </template>
+
+          <!-- Visor a pantalla completa -->
+          <div
+            x-show="open"
+            x-cloak
+            @keydown.escape.window="close()"
+            @keydown.arrow-right.window="next()"
+            @keydown.arrow-left.window="prev()"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="fixed inset-0 z-50 col-span-full flex items-center justify-center bg-ink/95 p-4"
+            @click.self="close()"
+          >
+            <button
+              type="button"
+              @click="close()"
+              class="absolute top-[max(1.25rem,env(safe-area-inset-top))] right-5 text-paper/70 hover:text-paper text-3xl leading-none"
+              aria-label="Cerrar"
+            >
+              &times;
+            </button>
+            <button
+              type="button"
+              @click="prev()"
+              class="absolute left-2 sm:left-6 text-paper/60 hover:text-paper text-4xl px-2"
+              aria-label="Anterior"
+            >
+              &#8249;
+            </button>
+            <img
+              :src="/images/[index].jpg"
+              :alt="`Foto ${index + 1}`"
+              x-transition:enter="transition ease-out duration-300"
+              x-transition:enter-start="opacity-0 scale-95"
+              x-transition:enter-end="opacity-100 scale-100"
+              :key="index"
+              class="max-h-[85svh] max-w-full object-contain grayscale"
+            />
+            <button
+              type="button"
+              @click="next()"
+              class="absolute right-2 sm:right-6 text-paper/60 hover:text-paper text-4xl px-2"
+              aria-label="Siguiente"
+            >
+              &#8250;
+            </button>
           </div>
         </div>
       </section>
@@ -145,10 +246,10 @@
       <!-- RSVP -->
       <section x-data="{ enviado: false, nombre: '', asistentes: 1 }" class="w-full bg-charcoal text-paper px-6 py-24 border-t border-paper/15">
         <div class="max-w-sm mx-auto text-center">
-          <p class="font-serif text-3xl sm:text-4xl mb-2">Confirma tu asistencia</p>
+          <p x-reveal class="font-serif text-3xl sm:text-4xl mb-2">Confirma tu asistencia</p>
           <div class="w-10 h-px bg-muted mx-auto my-6"></div>
 
-          <form x-show="!enviado" @submit.prevent="enviado = true" class="space-y-5 text-left">
+          <form x-show="!enviado" x-reveal.lg @submit.prevent="enviado = true" class="space-y-5 text-left">
             <div>
               <label class="block uppercase tracking-[0.2em] text-xs text-muted mb-2" for="nombre">Nombre</label>
               <input
