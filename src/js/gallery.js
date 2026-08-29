@@ -2,6 +2,10 @@
 // y actualiza esta lista (usa el mismo orden en el que quieres que aparezcan).
 export const galleryPhotos = Array.from({ length: 10 }, (_, i) => `/images/gallery/${i + 1}.webp`)
 
+// Fotos de ejemplo del dress code. Coloca los archivos en public/images/dresscode/
+// y ajusta el número si tienes más o menos ejemplos.
+export const dresscodePhotos = Array.from({ length: 5 }, (_, i) => `/images/dresscode/${i + 1}.webp`)
+
 // Componente Alpine: cuadrícula + visor a pantalla completa (lightbox).
 export function gallery(photos) {
   return {
