@@ -22,7 +22,7 @@ export const event = {
     '¡Feliz cumpleaños! 🎂',
     'Tengo una duda ✋',
   ],
-  codigoVestimenta: 'Casual elegante',
+  codigoVestimenta: 'Blanco & Negro',
   // Colores sugeridos para el dress code (los círculos de la sección).
   // Usa los tonos que apliquen a tu evento, en cualquier cantidad.
   paleta: ['#1a1a1a', '#f0ece4'],
