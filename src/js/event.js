@@ -11,7 +11,7 @@ export const event = {
   },
   // Número de WhatsApp del cumpleañero para el botón de confirmación.
   // Formato: código de país + número, sin "+", espacios ni guiones (ej. 523312345678).
-  whatsapp: '523312345678',
+  whatsapp: '523861095709',
   // Opciones de confirmación: el invitado elige una y se envía como mensaje
   // de WhatsApp tal cual está escrita aquí. Edita el texto o el orden libremente.
   rsvpOpciones: [
