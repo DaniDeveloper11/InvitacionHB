@@ -2,7 +2,7 @@
 export const event = {
   nombre: 'Mi Cumpleaños',
   // Fecha y hora del evento en formato ISO (respeta la zona horaria local).
-  fecha: '2026-09-26T19:00:00',
+  fecha: '2027-01-10T19:00:00',
 
   lugar: {
     nombre: "Becerra's Bar",
